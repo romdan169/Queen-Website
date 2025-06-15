@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <title>Mading Queen + Fitur</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: sans-serif;
+      margin: 0;
+      background: #f0f0f0;
+      text-align: center;
+      padding-bottom: 80px; /* space for WA btn */
+    }
+    .halaman {
+      display: none;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+      padding: 20px;
+      position: absolute;
+      width: 100%;
+      max-width: 480px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: white;
+      box-shadow: 0 0 10px #ccc;
+      border-radius: 8px;
+      margin-top: 20px;
+    }
+    .aktif {
+      display: block;
+      opacity: 1;
+    }
+    img.logo {
+      width: 100px;
+      margin-top: 30px;
+    }
+    h1, h2, h3 {
+      margin: 10px 0;
+    }
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: royalblue;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    table {
+      margin: 20px auto;
+[15/6, 09.33] ChatGPT: border-collapse: collapse;
+      width: 90%;
+      max-width: 400px;
+    }
+    th, td {
+      padding: 10px;
+      border: 1px solid #aaa;
+    }
+    th {
+      background-color: royalblue;
+      color: white;
+    }
+    .wa-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #25D366;
+      color: white;
+      padding: 14px 18px;
+      border-radius: 50%;
+      font-size: 22px;
+      text-decoration: none;
+      box-shadow: 0 0 6px #1ebe5b;
+      z-index: 1000;
+    }
+    /* Galeri */
+    .galeri-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+    }
+    .galeri-container img {
+      width: 100px;
+      height: 80px;
+      object-fit: cover;
+      border-radius: 6px;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: border-color 0.3s ease;
+    }
+    .galeri-container img:hover {
+      border-color: royalblue;
+    }
+    /* Overlay untuk gambar */
+    #overlay {
+      position: fixed;
+      top:0; left:0; right:0; bottom:0;
+      background: rgba(0,0,0,0.8);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 2000;
+    }
+    #overlay img {
+      max-width: 90%;
+      max-height: 80%;
+      border-radius: 10px;
+[15/6, 09.33] ChatGPT: box-shadow: 0 0 20px #000;
+    }
+  </style>
+</head>
+<body>
+
+<!-- Halaman 1 -->
+<div id="hal1" class="halaman aktif">
+  <img src="logo.png" alt="Logo" class="logo" />
+  <h1>Pondok Pesantren Queen Ainul Yaqien</h1>
+  <p>Jl. Pesantren No. 99, Sukamaju<br />0812-3456-7890</p>
+  
+  <h3>Pengumuman</h3>
+  <p><b>Libur Nasional pada Jumat 17 Juni 2025</b></p>
+  
+  <h3>Jadwal Sholat Hari Ini</h3>
+  <table>
+    <tr><th>Subuh</th><td>04:25</td></tr>
+    <tr><th>Dzuhur</th><td>12:00</td></tr>
+    <tr><th>Ashar</th><td>15:15</td></tr>
+    <tr><th>Maghrib</th><td>18:05</td></tr>
+    <tr><th>Isya</th><td>19:20</td></tr>
+  </table>
+  
+  <button onclick="pindah('hal1','hal2')">Lihat Jadwal Piket</button>
+  <button onclick="pindah('hal1','hal3')">Lihat Galeri Foto</button>
+</div>
+
+<!-- Halaman 2 -->
+<div id="hal2" class="halaman">
+  <h2>Jadwal Piket Mingguan</h2>
+  <table>
+    <tr><th>Hari</th><th>Nama</th></tr>
+    <tr><td>Senin</td><td>Ana & Budi</td></tr>
+    <tr><td>Selasa</td><td>Cici & Dede</td></tr>
+    <tr><td>Rabu</td><td>Eka & Fajar</td></tr>
+    <tr><td>Kamis</td><td>Gina & Hasan</td></tr>
+    <tr><td>Jumat</td><td>Ida & Joko</td></tr>
+    <tr><td>Sabtu</td><td>Ida & Joko</td></tr>
+    <tr><td>Ahad</td><td>Ida & Joko</td></tr>
+  </table>
+[15/6, 09.33] ChatGPT: <button onclick="pindah('hal2','hal1')">Kembali</button>
+</div>
+
+<!-- Halaman 3 (Galeri) -->
+<div id="hal3" class="halaman">
+  <h2>Galeri Foto Pondok</h2>
+  <div class="galeri-container">
+    <img src="foto1.jpg" alt="Foto 1" onclick="zoomGambar(this)" />
+    <img src="foto2.jpg" alt="Foto 2" onclick="zoomGambar(this)" />
+    <img src="foto3.jpg" alt="Foto 3" onclick="zoomGambar(this)" />
+    <img src="foto4.jpg" alt="Foto 4" onclick="zoomGambar(this)" />
+  </div>
+  <button onclick="pindah('hal3','hal1')">Kembali</button>
+</div>
+
+<!-- Overlay untuk zoom gambar -->
+<div id="overlay" onclick="tutupZoom()">
+  <img src="" alt="Zoomed Image" id="imgZoom" />
+</div>
+
+<!-- Tombol WA -->
+<a href="https://wa.me/6281234567890" class="wa-btn" target="_blank" rel="noopener noreferrer">📱</a>
+
+<!-- Audio -->
+<audio autoplay loop hidden>
+  <source src="backsound.mp3" type="audio/mpeg" />
+</audio>
+
+<script>
+  function pindah(dari, ke) {
+    document.getElementById(dari).classList.remove('aktif');
+    setTimeout(() => {
+      document.getElementById(dari).style.display = 'none';
+      const tujuan = document.getElementById(ke);
+      tujuan.style.display = 'block';
+      setTimeout(() => tujuan.classList.add('aktif'), 10);
+    }, 500);
+  }
+
+  // Zoom gambar galeri
+  function zoomGambar(img) {
+[15/6, 09.33] ChatGPT: const overlay = document.getElementById('overlay');
+    const imgZoom = document.getElementById('imgZoom');
+    imgZoom.src = img.src;
+    overlay.style.display = 'flex';
+  }
+  function tutupZoom() {
+    document.getElementById('overlay').style.display = 'none';
+  }
+</script>
+
+</body>
+</html>
